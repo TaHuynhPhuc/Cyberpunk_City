@@ -1,20 +1,14 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Move : MonoBehaviour
 {
-    public float speed;
+    private float speed = 5f;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
     void Update()
     {
+        // Cho chạy liên tục qua trái
         transform.position += Vector3.left * speed * Time.deltaTime;
     }
 }
