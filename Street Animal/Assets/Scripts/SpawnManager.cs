@@ -22,7 +22,7 @@ public class SpawnManager : MonoBehaviour
     {
         yield return new WaitForSeconds(RandomSpawn());
         GameObject prefabs = ObjectPool.instance.GetPooledObject();
-        if (prefabs != null )
+        if (prefabs != null && PlayerController.instance.isPlayerLive)
         {
             prefabs.transform.position = platformPosition;
             prefabs.SetActive(true);

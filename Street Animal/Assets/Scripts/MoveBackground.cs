@@ -19,6 +19,14 @@ public class MoveBackground : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (PlayerController.instance.isPlayerLive)
+        {
+            Repeat();
+        }
+    }
+
+    private void Repeat()
+    {
         distance += Time.deltaTime * speed;
         material.SetTextureOffset("_MainTex", Vector2.right * distance);
     }

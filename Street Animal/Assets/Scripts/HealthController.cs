@@ -7,7 +7,6 @@ public class HealthController : MonoBehaviour
 {
     public static HealthController instance;
     public int playerHealth = 3;
-    private int temp;
     [SerializeField] private Image[] hearts;
     [SerializeField] private Sprite redHealth;
     [SerializeField] private Sprite blackHealth;
@@ -47,23 +46,8 @@ public class HealthController : MonoBehaviour
             else
             {
                 animator[i].enabled = true;
-                temp = i;
                 hearts[i].sprite = blackHealth;
-                animator[temp].SetTrigger("Black");
             }
-        }
-    }
-
-    public bool LessHeart()
-    {
-        if(playerHealth < 0)
-        {
-            playerHealth--;
-            return true;
-        }
-        else
-        {
-            return false;
         }
     }
 }
