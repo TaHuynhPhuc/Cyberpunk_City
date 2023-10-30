@@ -5,13 +5,17 @@ using TMPro;
 
 public class PointTrigger : MonoBehaviour
 {
+    public static PointTrigger instance;
     public int point = 0;
     public TextMeshProUGUI textMPro;
 
     // Start is called before the first frame update
-    void Start()
+    private void Awake()
     {
-
+        if (instance == null)
+        {
+            instance = this;
+        }
     }
 
     // Update is called once per frame

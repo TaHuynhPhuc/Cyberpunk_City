@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Ground
   - DeadBlock
+  - Point
+  - Bird
   layers:
   - Default
   - TransparentFX
