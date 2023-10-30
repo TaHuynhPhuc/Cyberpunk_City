@@ -18,10 +18,14 @@ public class PointTrigger : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        setText();
+    }
     // Update is called once per frame
     void Update()
     {
-        setText();
+        
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -29,6 +33,7 @@ public class PointTrigger : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
             point++;
+            setText();
         }
     }
 
