@@ -2,14 +2,17 @@
 using System.Collections.Generic;
 using UnityEditor.SceneManagement;
 using UnityEngine;
+using TMPro;
 
 public class PlayerController : MonoBehaviour
 {
+    [SerializeField] private TextMeshProUGUI textMeshProUGUI;
     [SerializeField] private Animator animator;
     private Rigidbody2D rig2D;
     private float powerJump = 4.5f;
     private bool onGround;
     public bool isPlayerLive = true;
+    public int point = 0;
 
     public static PlayerController instance;
 
@@ -17,6 +20,7 @@ public class PlayerController : MonoBehaviour
     {
         if (instance == null) instance = this;
         rig2D = GetComponent<Rigidbody2D>();
+        setText();
     }
 
     // Update is called once per frame
@@ -52,5 +56,19 @@ public class PlayerController : MonoBehaviour
                 isPlayerLive = false;
             }
         }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Point"))
+        {
+            point++;
+            setText();
+        }
+    }
+
+    private void setText()
+    {
+        textMeshProUGUI.text = "Point: " + point;
     }
 }
