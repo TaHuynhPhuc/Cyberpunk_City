@@ -9,7 +9,7 @@ public class ObjectPool : MonoBehaviour
     private List<GameObject> pooledObjects = new List<GameObject>();
     private int amountToPool = 5;
 
-    [SerializeField] private GameObject prefabs;
+    [SerializeField] private GameObject plaform;
 
     private void Awake()
     {
@@ -24,13 +24,13 @@ public class ObjectPool : MonoBehaviour
     {
         for(int i = 0; i < amountToPool; i++)
         {
-            GameObject gameObject = Instantiate(prefabs);
+            GameObject gameObject = Instantiate(plaform);
             gameObject.SetActive(false);
             pooledObjects.Add(gameObject);
         }
     }
 
-    public GameObject GetPooledObject()
+    public GameObject GetPlatformObject()
     {
         for (int i = 0; i < pooledObjects.Count; i++)
         {
