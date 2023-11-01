@@ -36,22 +36,16 @@ public class SpawnManager : MonoBehaviour
         {
             platform.transform.position = platformPosition;
             platform.SetActive(true);
-            if (point == pointNextLevel)
-            {
-                pointNextLevel += 5;
-                Instantiate(bird, new Vector3(platform.transform.position.x, -3, 0), bird.transform.rotation);
-                Debug.Log("Bird");
-            }
         }else if (hammer != null && isPlayerLive && !gameModeRun)
         {
             hammer.transform.position = new Vector3(10, Random.Range(-2, 3), 0);
             hammer.SetActive(true);
             Debug.Log("Fly");
-            if (point == pointNextLevel)
-            {
-                pointNextLevel += 5;
-                //Instantiate(bird, new Vector3(platform.transform.position.x, -3, 0), bird.transform.rotation);
-            }
+        }if (point == pointNextLevel)
+        {
+            pointNextLevel += 5;
+            Instantiate(bird, new Vector3(platform.transform.position.x, -3, 0), bird.transform.rotation);
+            Debug.Log("Bird");
         }
         StartCoroutine(Spawn());
     }

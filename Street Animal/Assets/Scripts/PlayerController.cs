@@ -40,13 +40,13 @@ public class PlayerController : MonoBehaviour
 
     public void Jump()
     {
-        if (onGround)
+        if (onGround && gameModeRun)
         {
             rig2D.AddForce(Vector2.up * powerJump, ForceMode2D.Impulse);
-            if (gameModeRun)
-            {
-                onGround = false;
-            }
+            onGround = false;
+        }else if (!gameModeRun)
+        {
+            rig2D.AddForce(Vector2.up * (powerJump + 2), ForceMode2D.Impulse);
         }
     }
 
