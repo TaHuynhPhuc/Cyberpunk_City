@@ -12,4 +12,12 @@ public class DestroyBlock : MonoBehaviour
             collision.gameObject.SetActive(false);
         }
     }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Bird"))
+        {
+            Destroy(collision.gameObject);
+        }
+    }
 }
