@@ -636,8 +636,8 @@ GameObject:
   - component: {fileID: 585745962}
   - component: {fileID: 585745961}
   - component: {fileID: 585745960}
-  - component: {fileID: 585745964}
   - component: {fileID: 585745965}
+  - component: {fileID: 585745966}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -784,7 +784,27 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!95 &585745964
+--- !u!114 &585745965
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 585745959}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72e891617adf2db4782f7c282936fce5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  boxCollider: {fileID: 585745960}
+  Bird1Animtor: {fileID: 9100000, guid: a91c15bf78436da458718e5e8724cc0e, type: 2}
+  Dog1Animtor: {fileID: 9100000, guid: 7f7e10266e173514aab9c9c7a6089623, type: 2}
+  textMeshProUGUI: {fileID: 1834592960}
+  animator: {fileID: 585745966}
+  isPlayerLive: 1
+  point: 0
+  gameModeRun: 1
+--- !u!95 &585745966
 Animator:
   serializedVersion: 5
   m_ObjectHideFlags: 0
@@ -805,22 +825,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &585745965
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 585745959}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 72e891617adf2db4782f7c282936fce5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  textMeshProUGUI: {fileID: 1834592960}
-  animator: {fileID: 585745964}
-  isPlayerLive: 1
-  point: 0
 --- !u!1 &671165740
 GameObject:
   m_ObjectHideFlags: 0
@@ -850,7 +854,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5d55f31a249d4f4a96d76c3e26d5fc3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerHealth: 3
+  playerHealth: 100
   hearts:
   - {fileID: 214816937}
   - {fileID: 1980897312}
@@ -2259,7 +2263,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0780f322b3a0ba340aceabcf1dd26595, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pooledObjectsModeRun: []
+  pooledObjectsModeFly: []
   plaform: {fileID: 6819753004769340634, guid: 5a19bec136397b141b341cc2bf51055c, type: 3}
+  hammer: {fileID: 1271960302491811691, guid: 1b92f1a38d23e844697a933c18d9f7c3, type: 3}
 --- !u!4 &1876284568
 Transform:
   m_ObjectHideFlags: 0
@@ -2523,7 +2530,7 @@ Transform:
   m_GameObject: {fileID: 2055242453}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -11, y: 1, z: 0}
+  m_LocalPosition: {x: -13, y: 1, z: 0}
   m_LocalScale: {x: 0.5, y: 11, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

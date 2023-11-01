@@ -6,10 +6,12 @@ public class ObjectPool : MonoBehaviour
 {
     public static ObjectPool instance;
 
-    private List<GameObject> pooledObjects = new List<GameObject>();
+    public List<GameObject> pooledObjectsModeRun = new List<GameObject>();
+    public List<GameObject> pooledObjectsModeFly = new List<GameObject>();
     private int amountToPool = 5;
 
     [SerializeField] private GameObject plaform;
+    [SerializeField] private GameObject hammer;
 
     private void Awake()
     {
@@ -22,23 +24,29 @@ public class ObjectPool : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        for(int i = 0; i < amountToPool; i++)
-        {
-            GameObject gameObject = Instantiate(plaform);
-            gameObject.SetActive(false);
-            pooledObjects.Add(gameObject);
-        }
+        SpawnAndInputList(plaform, pooledObjectsModeRun);
+        SpawnAndInputList(hammer, pooledObjectsModeFly);
     }
 
-    public GameObject GetPlatformObject()
+    public GameObject GetObject(List<GameObject> listObj)
     {
-        for (int i = 0; i < pooledObjects.Count; i++)
+        for (int i = 0; i < listObj.Count; i++)
         {
-            if (!pooledObjects[i].activeInHierarchy)
+            if (!listObj[i].activeInHierarchy)
             {
-                return pooledObjects[i];
+                return listObj[i];
             }
         }
         return null;
+    }
+
+    private void SpawnAndInputList(GameObject obj, List<GameObject> listObj)
+    {
+        for (int i = 0; i < amountToPool; i++)
+        {
+            GameObject gameObject = Instantiate(obj);
+            gameObject.SetActive(false);
+            listObj.Add(gameObject);
+        }
     }
 }
