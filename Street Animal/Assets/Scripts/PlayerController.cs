@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEditor.SceneManagement;
 using UnityEngine;
 using TMPro;
+using static UnityEngine.GraphicsBuffer;
 
 public class PlayerController : MonoBehaviour
 {
@@ -16,7 +17,9 @@ public class PlayerController : MonoBehaviour
     private bool onGround;
     public bool isPlayerLive = true;
     public int point = 0;
+    private int targetX = -7;
     public bool gameModeRun = true;
+    public bool isStartGame = false;
 
     public static PlayerController instance;
 
@@ -39,16 +42,31 @@ public class PlayerController : MonoBehaviour
         {
             transform.position = new Vector3(-7, 5, 0);
         }
+        if (transform.position.x < targetX && !isStartGame)
+        {
+            // Di chuyển player sang phải
+            transform.Translate(Vector3.right * 2 * Time.deltaTime);
+        }
+        else if(transform.position.x >= targetX && !isStartGame)
+        {
+            SetAnimationIdle();
+            Debug.Log("Soss");
+        }
         CheckDead();
     }
 
     public void Jump()
     {
-        if (onGround && gameModeRun && isPlayerLive)
+        if (!isStartGame)
+        {
+            SetAnimationRun();
+            isStartGame = true;
+        }
+        if (onGround && gameModeRun && isPlayerLive && isStartGame)
         {
             rig2D.AddForce(Vector2.up * powerJump, ForceMode2D.Impulse);
             onGround = false;
-        }else if (!gameModeRun && isPlayerLive)
+        }else if (!gameModeRun && isPlayerLive && isStartGame)
         {
             rig2D.velocity = Vector2.up * powerJump;
         }
@@ -115,6 +133,11 @@ public class PlayerController : MonoBehaviour
     private void SetAnimationDead()
     {
         animator.SetTrigger("Dead");
+    }
+
+    private void SetAnimationIdle()
+    {
+        animator.SetTrigger("Idle");
     }
 
     private void CheckDead()

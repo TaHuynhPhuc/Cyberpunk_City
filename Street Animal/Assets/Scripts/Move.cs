@@ -12,7 +12,7 @@ public class Move : MonoBehaviour
     }
     void Update()
     {
-        if (PlayerController.instance.isPlayerLive)
+        if (PlayerController.instance.isPlayerLive && PlayerController.instance.isStartGame)
         {
             MoveLeft();
         }

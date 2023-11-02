@@ -19,7 +19,7 @@ public class MoveBackground : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (PlayerController.instance.isPlayerLive)
+        if (PlayerController.instance.isPlayerLive && PlayerController.instance.isStartGame)
         {
             Repeat();
         }
