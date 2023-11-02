@@ -6,8 +6,8 @@ public class ObjectPool : MonoBehaviour
 {
     public static ObjectPool instance;
 
-    public List<GameObject> pooledObjectsModeRun = new List<GameObject>();
-    public List<GameObject> pooledObjectsModeFly = new List<GameObject>();
+    public List<GameObject> pooledObjectsHammer = new List<GameObject>();
+    public List<GameObject> pooledObjectsPlatform = new List<GameObject>();
     private int amountToPool = 5;
 
     [SerializeField] private GameObject plaform;
@@ -24,8 +24,8 @@ public class ObjectPool : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        SpawnAndInputList(plaform, pooledObjectsModeRun);
-        SpawnAndInputList(hammer, pooledObjectsModeFly);
+        SpawnAndInputList(plaform, pooledObjectsHammer);
+        SpawnAndInputList(hammer, pooledObjectsPlatform);
     }
 
     public GameObject GetObject(List<GameObject> listObj)

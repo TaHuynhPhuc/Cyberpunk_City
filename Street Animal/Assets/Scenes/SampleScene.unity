@@ -797,8 +797,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   boxCollider: {fileID: 585745960}
-  Bird1Animtor: {fileID: 9100000, guid: a91c15bf78436da458718e5e8724cc0e, type: 2}
-  Dog1Animtor: {fileID: 9100000, guid: 7f7e10266e173514aab9c9c7a6089623, type: 2}
+  flyAnimtor: {fileID: 9100000, guid: a91c15bf78436da458718e5e8724cc0e, type: 2}
+  runAnimtor: {fileID: 9100000, guid: 7f7e10266e173514aab9c9c7a6089623, type: 2}
   textMeshProUGUI: {fileID: 1834592960}
   animator: {fileID: 585745966}
   isPlayerLive: 1
@@ -854,7 +854,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5d55f31a249d4f4a96d76c3e26d5fc3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerHealth: 100
+  playerHealth: 3
   hearts:
   - {fileID: 214816937}
   - {fileID: 1980897312}
@@ -2263,8 +2263,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0780f322b3a0ba340aceabcf1dd26595, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pooledObjectsModeRun: []
-  pooledObjectsModeFly: []
+  pooledObjectsHammer: []
+  pooledObjectsPlatform: []
   plaform: {fileID: 6819753004769340634, guid: 5a19bec136397b141b341cc2bf51055c, type: 3}
   hammer: {fileID: 1271960302491811691, guid: 1b92f1a38d23e844697a933c18d9f7c3, type: 3}
 --- !u!4 &1876284568
@@ -2295,6 +2295,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bird: {fileID: 8585771378659802851, guid: f36ca3851ab1bd34498042d7006f8a31, type: 3}
+  dog: {fileID: 3053148935382844633, guid: 823c0f4b149e19f41809b528bbb20761, type: 3}
 --- !u!1 &1980897310
 GameObject:
   m_ObjectHideFlags: 0
@@ -2407,7 +2408,7 @@ GameObject:
   - component: {fileID: 2055242458}
   m_Layer: 0
   m_Name: DestroyBlock
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

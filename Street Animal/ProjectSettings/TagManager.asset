@@ -8,6 +8,8 @@ TagManager:
   - DeadBlock
   - Point
   - Bird
+  - Dog
+  - HammerBlock
   layers:
   - Default
   - TransparentFX

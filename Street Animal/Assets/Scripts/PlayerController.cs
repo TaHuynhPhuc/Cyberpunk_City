@@ -7,10 +7,10 @@ using TMPro;
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] BoxCollider2D boxCollider;
-    [SerializeField] RuntimeAnimatorController Bird1Animtor;
-    [SerializeField] RuntimeAnimatorController Dog1Animtor;
+    [SerializeField] RuntimeAnimatorController flyAnimtor;
+    [SerializeField] RuntimeAnimatorController runAnimtor;
     [SerializeField] private TextMeshProUGUI textMeshProUGUI;
-    [SerializeField] private Animator animator;
+    [SerializeField] public Animator animator;
     private Rigidbody2D rig2D;
     private float powerJump = 4.5f;
     private bool onGround;
@@ -39,15 +39,16 @@ public class PlayerController : MonoBehaviour
         {
             transform.position = new Vector3(-7, 5, 0);
         }
+        CheckDead();
     }
 
     public void Jump()
     {
-        if (onGround && gameModeRun)
+        if (onGround && gameModeRun && isPlayerLive)
         {
             rig2D.AddForce(Vector2.up * powerJump, ForceMode2D.Impulse);
             onGround = false;
-        }else if (!gameModeRun)
+        }else if (!gameModeRun && isPlayerLive)
         {
             rig2D.velocity = Vector2.up * powerJump;
         }
@@ -60,18 +61,7 @@ public class PlayerController : MonoBehaviour
         {
             onGround = true;
         }
-        if (collision.gameObject.CompareTag("DeadBlock"))
-        {
-            // Phá hủy block
-            collision.gameObject.SetActive(false);
-            HealthController.instance.playerHealth--;
-            if (HealthController.instance.playerHealth == 0)
-            {
-                SetAnimationDead();
-                isPlayerLive = false;
-            }
-        }
-        if (collision.gameObject.CompareTag("Ground") && !gameModeRun)
+        if (collision.gameObject.CompareTag("Ground") && !gameModeRun && isPlayerLive)
         {
             HealthController.instance.playerHealth--;
             rig2D.velocity = Vector2.up * powerJump;
@@ -88,11 +78,27 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.CompareTag("Bird"))
         {
             Destroy(collision.gameObject);
-            animator.runtimeAnimatorController = Bird1Animtor;
-            boxCollider.size = new Vector2(0.5548458f, 0.3641517f);
-            boxCollider.offset = new Vector2(-0.01063824f, -0.09253395f);
+            animator.runtimeAnimatorController = flyAnimtor;
+            boxCollider.size = new Vector2(0.4993038f, 0.4863439f);
+            boxCollider.offset = new Vector2(-0.03840923f, -0.15363f);
             SetAnimationRun();
             gameModeRun = false;
+            StartCoroutine(TimeBuffHeart());
+        }
+        if (collision.gameObject.CompareTag("Dog"))
+        {
+            Destroy(collision.gameObject);
+            animator.runtimeAnimatorController = runAnimtor;
+            boxCollider.size = new Vector2(0.9117303f, 0.6633778f);
+            boxCollider.offset = new Vector2(-0.08961272f, -0.410507f);
+            SetAnimationRun();
+            gameModeRun = true;
+            StartCoroutine(TimeBuffHeart());
+        }
+        if(collision.gameObject.CompareTag("DeadBlock"))
+        {
+            collision.gameObject.SetActive(false);
+            HealthController.instance.playerHealth--;
         }
     }
 
@@ -109,5 +115,25 @@ public class PlayerController : MonoBehaviour
     private void SetAnimationDead()
     {
         animator.SetTrigger("Dead");
+    }
+
+    private void CheckDead()
+    {
+        if (HealthController.instance.playerHealth == 0)
+        {
+            SetAnimationDead();
+            isPlayerLive = false;
+        }
+    }
+
+
+    IEnumerator TimeBuffHeart()
+    {
+        int tempHeart = HealthController.instance.playerHealth;
+        HealthController.instance.playerHealth = 100;
+        Debug.Log("Buff");
+        yield return new WaitForSeconds(5);
+        HealthController.instance.playerHealth = tempHeart;
+        Debug.Log("EndBug");
     }
 }
