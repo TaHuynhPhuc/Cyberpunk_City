@@ -854,7 +854,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5d55f31a249d4f4a96d76c3e26d5fc3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerHealth: 100
+  playerHealth: 3
   hearts:
   - {fileID: 214816937}
   - {fileID: 1980897312}
