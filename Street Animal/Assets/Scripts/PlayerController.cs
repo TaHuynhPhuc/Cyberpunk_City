@@ -35,7 +35,10 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (transform.position.y > 5)
+        {
+            transform.position = new Vector3(-7, 5, 0);
+        }
     }
 
     public void Jump()
@@ -46,7 +49,7 @@ public class PlayerController : MonoBehaviour
             onGround = false;
         }else if (!gameModeRun)
         {
-            rig2D.AddForce(Vector2.up * (powerJump + 2), ForceMode2D.Impulse);
+            rig2D.velocity = Vector2.up * powerJump;
         }
     }
 
@@ -68,6 +71,11 @@ public class PlayerController : MonoBehaviour
                 isPlayerLive = false;
             }
         }
+        if (collision.gameObject.CompareTag("Ground") && !gameModeRun)
+        {
+            HealthController.instance.playerHealth--;
+            rig2D.velocity = Vector2.up * powerJump;
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -79,9 +87,10 @@ public class PlayerController : MonoBehaviour
         }
         if (collision.gameObject.CompareTag("Bird"))
         {
+            Destroy(collision.gameObject);
             animator.runtimeAnimatorController = Bird1Animtor;
-            boxCollider.size = new Vector2(0, -0.1404536f);
-            boxCollider.offset = new Vector2(0.4747639f, 0.3668645f);
+            boxCollider.size = new Vector2(0.5548458f, 0.3641517f);
+            boxCollider.offset = new Vector2(-0.01063824f, -0.09253395f);
             SetAnimationRun();
             gameModeRun = false;
         }
