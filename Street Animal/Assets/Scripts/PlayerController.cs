@@ -50,7 +50,6 @@ public class PlayerController : MonoBehaviour
         else if(transform.position.x >= targetX && !isStartGame)
         {
             SetAnimationIdle();
-            Debug.Log("Soss");
         }
         CheckDead();
     }
@@ -59,6 +58,7 @@ public class PlayerController : MonoBehaviour
     {
         if (!isStartGame)
         {
+            animator.ResetTrigger("Idle");
             SetAnimationRun();
             isStartGame = true;
         }

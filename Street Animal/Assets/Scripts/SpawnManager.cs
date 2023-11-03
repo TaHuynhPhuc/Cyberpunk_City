@@ -17,10 +17,7 @@ public class SpawnManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if (PlayerController.instance.isStartGame)
-        {
         StartCoroutine(Spawn());
-        }
     }
 
     // Update is called once per frame
@@ -38,7 +35,7 @@ public class SpawnManager : MonoBehaviour
         GameObject platform = ObjectPool.instance.GetObject(ObjectPool.instance.pooledObjectsHammer);
         GameObject hammer = ObjectPool.instance.GetObject(ObjectPool.instance.pooledObjectsPlatform);
 
-        if (platform != null && isPlayerLive && gameModeRun)
+        if (platform != null && isPlayerLive && gameModeRun && PlayerController.instance.isStartGame)
         {
             platform.transform.position = platformPosition;
             platform.SetActive(true);
@@ -48,7 +45,7 @@ public class SpawnManager : MonoBehaviour
                 SpawnAnimal = false;
             }
         }
-        else if (hammer != null && isPlayerLive && !gameModeRun)
+        else if (hammer != null && isPlayerLive && !gameModeRun && PlayerController.instance.isStartGame)
         {
             hammer.transform.position = new Vector3(10, Random.Range(-2, 3), 0);
             hammer.SetActive(true);
