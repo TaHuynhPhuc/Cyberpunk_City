@@ -18,7 +18,7 @@ public class DestroyBlock : MonoBehaviour
             }
             collision.gameObject.SetActive(false);
         }
-        if (collision.gameObject.CompareTag("Bird"))
+        if (collision.gameObject.CompareTag("Bird") || collision.gameObject.CompareTag("Explode") || collision.gameObject.CompareTag("Dog"))
         {
             Destroy(collision.gameObject);
         }

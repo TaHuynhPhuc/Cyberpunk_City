@@ -4,15 +4,21 @@ using UnityEditor.SceneManagement;
 using UnityEngine;
 using TMPro;
 using static UnityEngine.GraphicsBuffer;
+using Unity.VisualScripting;
 
 public class PlayerController : MonoBehaviour
 {
+    [SerializeField] private AudioSource audioSourceHurt;
+    [SerializeField] private AudioSource audioSourceBuff;
+    [SerializeField] private AudioSource audioSourcePoint;
+    [SerializeField] GameObject explode;
     [SerializeField] BoxCollider2D boxCollider;
     [SerializeField] RuntimeAnimatorController flyAnimtor;
     [SerializeField] RuntimeAnimatorController runAnimtor;
     [SerializeField] private TextMeshProUGUI textMeshProUGUI;
     [SerializeField] public Animator animator;
     private Rigidbody2D rig2D;
+    private Renderer render;
     private float powerJump = 4.5f;
     private bool onGround;
     public bool isPlayerLive = true;
@@ -20,6 +26,7 @@ public class PlayerController : MonoBehaviour
     private int targetX = -7;
     public bool gameModeRun = true;
     public bool isStartGame = false;
+    public bool isAnimationStart = true;
 
     public static PlayerController instance;
 
@@ -32,6 +39,7 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
+        render = GetComponent<Renderer>();
         SetAnimationRun();
     }
 
@@ -50,13 +58,14 @@ public class PlayerController : MonoBehaviour
         else if(transform.position.x >= targetX && !isStartGame)
         {
             SetAnimationIdle();
+            isAnimationStart = false;
         }
         CheckDead();
     }
 
     public void Jump()
     {
-        if (!isStartGame)
+        if (!isStartGame && !isAnimationStart)
         {
             animator.ResetTrigger("Idle");
             SetAnimationRun();
@@ -81,7 +90,9 @@ public class PlayerController : MonoBehaviour
         }
         if (collision.gameObject.CompareTag("Ground") && !gameModeRun && isPlayerLive)
         {
+            audioSourceHurt.Play();
             HealthController.instance.playerHealth--;
+            Instantiate(explode, new Vector3(transform.position.x, transform.position.y, 0), Quaternion.identity);
             rig2D.velocity = Vector2.up * powerJump;
         }
     }
@@ -90,6 +101,7 @@ public class PlayerController : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Point"))
         {
+            audioSourcePoint.Play();
             point++;
             SetText();
         }
@@ -115,6 +127,8 @@ public class PlayerController : MonoBehaviour
         }
         if(collision.gameObject.CompareTag("DeadBlock"))
         {
+            Instantiate(explode, new Vector3(transform.position.x + 0.5f, transform.position.y, 0), Quaternion.identity);
+            audioSourceHurt.Play();
             collision.gameObject.SetActive(false);
             HealthController.instance.playerHealth--;
         }
@@ -154,9 +168,12 @@ public class PlayerController : MonoBehaviour
     {
         int tempHeart = HealthController.instance.playerHealth;
         HealthController.instance.playerHealth = 100;
+        render.material.color = Color.red;
+        audioSourceBuff.Play();
         Debug.Log("Buff");
         yield return new WaitForSeconds(5);
         HealthController.instance.playerHealth = tempHeart;
+        render.material.color = Color.white;
         Debug.Log("EndBug");
     }
 }
