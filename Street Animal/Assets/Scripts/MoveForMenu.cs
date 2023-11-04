@@ -2,16 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Move : MonoBehaviour
+public class MoveForMenu : MonoBehaviour
 {
     private float speed = 5f;
 
     void Update()
     {
-        if (PlayerController.instance.isPlayerLive && PlayerController.instance.isStartGame)
-        {
-            MoveLeft();
-        }
+       MoveLeft();
     }
 
     private void MoveLeft()
