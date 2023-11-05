@@ -27,6 +27,7 @@ public class PlayerController : MonoBehaviour
     public bool gameModeRun = true;
     public bool isStartGame = false;
     public bool isAnimationStart = true;
+    private bool isFlyingUp = false;
 
     public static PlayerController instance;
 
@@ -40,7 +41,6 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         render = GetComponent<Renderer>();
-        SetAnimationRun();
     }
 
     // Update is called once per frame
@@ -53,6 +53,7 @@ public class PlayerController : MonoBehaviour
         if (transform.position.x < targetX && !isStartGame)
         {
             // Di chuyển player sang phải
+            SetAnimationRun();
             transform.Translate(Vector3.right * 2 * Time.deltaTime);
         }
         else if(transform.position.x >= targetX && !isStartGame)
@@ -60,6 +61,11 @@ public class PlayerController : MonoBehaviour
             SetAnimationIdle();
             isAnimationStart = false;
         }
+        if(Input.GetKeyDown(KeyCode.Space))
+        {
+            Jump();
+        }
+
         CheckDead();
     }
 
@@ -74,11 +80,13 @@ public class PlayerController : MonoBehaviour
         if (onGround && gameModeRun && isPlayerLive && isStartGame)
         {
             rig2D.AddForce(Vector2.up * powerJump, ForceMode2D.Impulse);
+            animator.ResetTrigger("Run");
             SetAnimationJump();
             onGround = false;
-        }else if (!gameModeRun && isPlayerLive && isStartGame)
+        }
+        else if (!gameModeRun && isPlayerLive && isStartGame && !isFlyingUp)
         {
-            rig2D.velocity = Vector2.up * powerJump;
+            rig2D.velocity = Vector2.up * (powerJump + 0.5f );
         }
     }
 
@@ -94,7 +102,7 @@ public class PlayerController : MonoBehaviour
         {
             audioSourceHurt.Play();
             HealthController.instance.playerHealth--;
-            Instantiate(explode, new Vector3(transform.position.x, transform.position.y, 0), Quaternion.identity);
+            IntateExplode();
             rig2D.velocity = Vector2.up * powerJump;
         }
     }
@@ -109,20 +117,21 @@ public class PlayerController : MonoBehaviour
         }
         if (collision.gameObject.CompareTag("Robot"))
         {
-            Destroy(collision.gameObject);
             animator.runtimeAnimatorController = flyAnimtor;
+            isFlyingUp = true;
+            Destroy(collision.gameObject);
             boxCollider.size = new Vector2(0.5685916f, 1.196473f);
             boxCollider.offset = new Vector2(-0.1256378f, -0.0371899f);
             isStartGame = false;
             gameModeRun = false;
             rig2D.velocity = Vector2.up * (powerJump*2);
             animator.SetTrigger("StartRun");
-            Debug.Log("Fly");
         }
         if (collision.gameObject.CompareTag("Human"))
         {
-            Destroy(collision.gameObject);
             animator.runtimeAnimatorController = runAnimtor;
+            Destroy(collision.gameObject);
+            IntateExplode();
             boxCollider.size = new Vector2(0.5380859f, 1.104957f);
             boxCollider.offset = new Vector2(-0.2934179f, -0.1897174f);
             SetAnimationRun();
@@ -131,7 +140,7 @@ public class PlayerController : MonoBehaviour
         }
         if(collision.gameObject.CompareTag("DeadBlock"))
         {
-            Instantiate(explode, new Vector3(transform.position.x , transform.position.y, 0), Quaternion.identity);
+            IntateExplode();
             audioSourceHurt.Play();
             collision.gameObject.SetActive(false);
             HealthController.instance.playerHealth--;
@@ -167,6 +176,11 @@ public class PlayerController : MonoBehaviour
     {
         if (HealthController.instance.playerHealth == 0)
         {
+            if (!gameModeRun)
+            {
+                boxCollider.size = new Vector2(0.5380859f, 1.327401f);
+                boxCollider.offset = new Vector2(-0.2934179f, -0.3009393f);
+            }
             SetAnimationDead();
             isPlayerLive = false;
         }
@@ -179,16 +193,19 @@ public class PlayerController : MonoBehaviour
         HealthController.instance.playerHealth = 100;
         render.material.color = Color.blue;
         audioSourceBuff.Play();
-        Debug.Log("Buff");
         yield return new WaitForSeconds(5);
         HealthController.instance.playerHealth = tempHeart;
         render.material.color = Color.white;
-        Debug.Log("EndBug");
     }
 
     public void StartAnimationFly()
     {
         SetAnimationRun();
-        isStartGame = true;
+        isFlyingUp = false;
+    }
+
+    public void IntateExplode()
+    {
+        Instantiate(explode, new Vector3(transform.position.x, transform.position.y, 0), Quaternion.identity);
     }
 }

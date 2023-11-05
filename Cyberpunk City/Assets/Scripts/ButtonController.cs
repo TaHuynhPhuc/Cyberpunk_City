@@ -38,6 +38,6 @@ public class ButtonController : MonoBehaviour
 
     public void MenuButton()
     {
-
+        SceneManager.LoadScene(0);
     }
 }

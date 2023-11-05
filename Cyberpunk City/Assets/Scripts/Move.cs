@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Move : MonoBehaviour
 {
-    private float speed = 5f;
 
     void Update()
     {
@@ -17,6 +16,6 @@ public class Move : MonoBehaviour
     private void MoveLeft()
     {
         // Cho chạy liên tục qua trái
-        transform.position += Vector3.left * speed * Time.deltaTime;
+        transform.position += Vector3.left * SpeedRealTime.instance.currentSpeed * Time.deltaTime;
     }
 }
