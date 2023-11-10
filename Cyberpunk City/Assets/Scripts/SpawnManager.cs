@@ -51,7 +51,7 @@ public class SpawnManager : MonoBehaviour
             hammer.SetActive(true);
             if (spawnHuman)
             {
-                Instantiate(human, new Vector3(hammer.transform.position.x - 0.5f, hammer.transform.position.y + 0.5f, 0), hammer.transform.rotation);
+                Instantiate(human, new Vector3(hammer.transform.position.x - 1.1f, hammer.transform.position.y + 0.5f, 0), hammer.transform.rotation);
                 spawnHuman = false;
             }
         }
