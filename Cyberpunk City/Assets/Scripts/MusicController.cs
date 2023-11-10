@@ -6,14 +6,10 @@ public class MusicController : MonoBehaviour
 {
     [SerializeField] private AudioSource musicBackground;
     [SerializeField] private AudioSource musicGamePlay;
+    [SerializeField] private AudioSource musicGameOver;
 
     private bool isGamePlayMusicActivated = false;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        musicBackground.Play();
-    }
+    private bool isGameOverMusicActivated = false;
 
     // Update is called once per frame
     void Update()
@@ -23,6 +19,13 @@ public class MusicController : MonoBehaviour
             isGamePlayMusicActivated = true;
             musicBackground.Stop();
             musicGamePlay.Play();
+        }
+        if (!PlayerController.instance.isPlayerLive && !isGameOverMusicActivated)
+        {
+            isGameOverMusicActivated = true;
+            musicGamePlay.Stop();
+            musicGameOver.Play();
+            Debug.Log("GameOver");
         }
     }
 }

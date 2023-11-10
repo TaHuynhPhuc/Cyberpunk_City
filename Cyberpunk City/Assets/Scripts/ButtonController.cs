@@ -7,6 +7,7 @@ public class ButtonController : MonoBehaviour
 {
     [SerializeField] private GameObject menuPause;
     [SerializeField] private GameObject pauseButton;
+    [SerializeField] private GameObject MusicMenu;
 
     private void Update()
     {
@@ -38,6 +39,22 @@ public class ButtonController : MonoBehaviour
 
     public void MenuButton()
     {
+        Time.timeScale = 1;
         SceneManager.LoadScene(0);
+    }
+
+    public void PlayButton()
+    {
+        SceneManager.LoadScene(1);
+    }
+
+    public void SettingButton()
+    {
+        MusicMenu.SetActive(true);
+    }
+
+    public void OutButton()
+    {
+        MusicMenu.SetActive(false);
     }
 }

@@ -8,6 +8,10 @@ using Unity.VisualScripting;
 
 public class PlayerController : MonoBehaviour
 {
+    [SerializeField] TextMeshProUGUI pointText;
+    [SerializeField] TextMeshProUGUI bestPointText;
+    [SerializeField] GameObject PauseButton;
+    [SerializeField] GameObject MenuGameOver;
     [SerializeField] private AudioSource audioSourceHurt;
     [SerializeField] private AudioSource audioSourceBuff;
     [SerializeField] private AudioSource audioSourcePoint;
@@ -54,7 +58,7 @@ public class PlayerController : MonoBehaviour
         {
             // Di chuyển player sang phải
             SetAnimationRun();
-            transform.Translate(Vector3.right * 2 * Time.deltaTime);
+            transform.Translate(Vector3.right * 1.5f * Time.deltaTime);
         }
         else if(transform.position.x >= targetX && !isStartGame)
         {
@@ -65,7 +69,6 @@ public class PlayerController : MonoBehaviour
         {
             Jump();
         }
-
         CheckDead();
     }
 
@@ -113,6 +116,10 @@ public class PlayerController : MonoBehaviour
         {
             audioSourcePoint.Play();
             point++;
+            if(point > GameManager.Instance.GetBestPoint())
+            {
+                GameManager.Instance.SetBestPoint(point);
+            }
             SetText();
         }
         if (collision.gameObject.CompareTag("Robot"))
@@ -152,6 +159,12 @@ public class PlayerController : MonoBehaviour
         textMeshProUGUI.text = "Point: " + point;
     }
 
+    private void SetTextEndGame()
+    {
+        pointText.text = "End Point: " + point;
+        bestPointText.text = "Best Point: " + GameManager.Instance.GetBestPoint();
+    }
+
     private void SetAnimationRun()
     {
         animator.SetTrigger("Run");
@@ -183,12 +196,17 @@ public class PlayerController : MonoBehaviour
             }
             SetAnimationDead();
             isPlayerLive = false;
+            PauseButton.SetActive(false);
+            textMeshProUGUI.gameObject.SetActive(false);
+            MenuGameOver.SetActive(true);
+            SetTextEndGame();
         }
     }
 
 
     IEnumerator TimeBuffHeart()
     {
+        StartCoroutine(BlinkEffect());
         int tempHeart = HealthController.instance.playerHealth;
         HealthController.instance.playerHealth = 100;
         render.material.color = Color.blue;
@@ -207,5 +225,21 @@ public class PlayerController : MonoBehaviour
     public void IntateExplode()
     {
         Instantiate(explode, new Vector3(transform.position.x, transform.position.y, 0), Quaternion.identity);
+    }
+
+    IEnumerator BlinkEffect()
+    {
+        yield return new WaitForSeconds(4);
+        render.material.color = Color.white;
+        yield return new WaitForSeconds(0.15f);
+        render.material.color = Color.blue;
+        yield return new WaitForSeconds(0.15f);
+        render.material.color = Color.white;
+        yield return new WaitForSeconds(0.15f);
+        render.material.color = Color.blue;
+        yield return new WaitForSeconds(0.15f);
+        render.material.color = Color.white;
+        yield return new WaitForSeconds(0.15f);
+        render.material.color = Color.blue;
     }
 }
