@@ -9,6 +9,7 @@ public class ButtonController : MonoBehaviour
     [SerializeField] private GameObject pauseButton;
     [SerializeField] private GameObject MusicMenu;
     [SerializeField] private GameObject CharacterMenu;
+    [SerializeField] private GameObject profile;
 
     private void Update()
     {
@@ -58,10 +59,16 @@ public class ButtonController : MonoBehaviour
     {
         MusicMenu.SetActive(false);
         CharacterMenu.SetActive(false);
+        profile.SetActive(false);
     }
 
     public void CharacterButton() 
     {
         CharacterMenu.SetActive(true);
+    }
+
+    public void ProfileButton()
+    {
+        profile.SetActive(true);
     }
 }

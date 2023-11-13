@@ -18,12 +18,13 @@ public class PlayerController : MonoBehaviour
     [SerializeField] GameObject explode;
     [SerializeField] BoxCollider2D boxCollider;
     [SerializeField] RuntimeAnimatorController flyAnimtor;
-    [SerializeField] RuntimeAnimatorController runAnimtor;
     [SerializeField] private TextMeshProUGUI textMeshProUGUI;
     [SerializeField] public Animator animator;
+    [SerializeField] public RuntimeAnimatorController[] animatorList;
+    private int selectedOption;
     private Rigidbody2D rig2D;
     private Renderer render;
-    private float powerJump = 4.5f;
+    private float powerJump = 4f;
     private bool onGround;
     public bool isPlayerLive = true;
     public int point = 0;
@@ -44,6 +45,8 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
+        selectedOption = PlayerPrefs.GetInt("selectedOption");
+        animator.runtimeAnimatorController = animatorList[selectedOption];
         render = GetComponent<Renderer>();
     }
 
@@ -89,7 +92,7 @@ public class PlayerController : MonoBehaviour
         }
         else if (!gameModeRun && isPlayerLive && isStartGame && !isFlyingUp)
         {
-            rig2D.velocity = Vector2.up * (powerJump + 0.5f );
+            rig2D.velocity = Vector2.up * (powerJump + 1f );
         }
     }
 
@@ -133,10 +136,11 @@ public class PlayerController : MonoBehaviour
             gameModeRun = false;
             rig2D.velocity = Vector2.up * (powerJump*2);
             animator.SetTrigger("StartRun");
+            audioSourceBuff.Play();
         }
         if (collision.gameObject.CompareTag("Human"))
         {
-            animator.runtimeAnimatorController = runAnimtor;
+            animator.runtimeAnimatorController = animatorList[selectedOption];
             Destroy(collision.gameObject);
             IntateExplode();
             boxCollider.size = new Vector2(0.5380859f, 1.104957f);

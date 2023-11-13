@@ -10,7 +10,7 @@ public class SpawnManager : MonoBehaviour
     [SerializeField] private GameObject robot;
     [SerializeField] private GameObject human;
     private int point;
-    private int pointNextLevel = 5;
+    private int pointNextLevel = 3;
     private bool gameModeRun = true;
     private bool isPlayerLive = true;
     private bool spawnHuman = false;
@@ -67,7 +67,7 @@ public class SpawnManager : MonoBehaviour
     {
         if (point == pointNextLevel)
         {
-            pointNextLevel += 5;
+            pointNextLevel += 7;
             spawnHuman = true;
         }
     }

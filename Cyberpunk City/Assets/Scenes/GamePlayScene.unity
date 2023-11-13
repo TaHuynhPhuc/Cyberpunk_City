@@ -712,11 +712,11 @@ GameObject:
   - component: {fileID: 585745961}
   - component: {fileID: 585745960}
   - component: {fileID: 585745965}
-  - component: {fileID: 585745966}
   - component: {fileID: 585745967}
   - component: {fileID: 585745969}
   - component: {fileID: 585745968}
   - component: {fileID: 585745970}
+  - component: {fileID: 585745966}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -837,7 +837,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: -1
-  m_Sprite: {fileID: -1822716647, guid: 7fac4f0e93bd28442bc281efc61083ca, type: 3}
+  m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -845,7 +845,7 @@ SpriteRenderer:
   m_Size: {x: 1.5, y: 1.5}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!4 &585745963
@@ -885,9 +885,12 @@ MonoBehaviour:
   explode: {fileID: 2260581489972564123, guid: 33ef9ad8096c0b845bc012da0b940350, type: 3}
   boxCollider: {fileID: 585745960}
   flyAnimtor: {fileID: 9100000, guid: 4ec99b39261f6614497a78cfef8c03a8, type: 2}
-  runAnimtor: {fileID: 9100000, guid: 2ee8cb9d2506f6340ba482e29bc9f11e, type: 2}
   textMeshProUGUI: {fileID: 1834592960}
   animator: {fileID: 585745966}
+  animatorList:
+  - {fileID: 9100000, guid: 2ee8cb9d2506f6340ba482e29bc9f11e, type: 2}
+  - {fileID: 9100000, guid: 61d6a859e7701874088f970968f54ead, type: 2}
+  - {fileID: 9100000, guid: e6198ee46d81bc64fa193313a6f118f3, type: 2}
   isPlayerLive: 1
   point: 0
   gameModeRun: 1
@@ -1724,6 +1727,7 @@ MonoBehaviour:
   pauseButton: {fileID: 1836826862}
   MusicMenu: {fileID: 0}
   CharacterMenu: {fileID: 0}
+  profile: {fileID: 0}
 --- !u!4 &1780663828
 Transform:
   m_ObjectHideFlags: 0
